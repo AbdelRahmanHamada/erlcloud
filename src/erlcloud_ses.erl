@@ -966,11 +966,11 @@ ses_request(Config, Action, Params) ->
 ses_request_no_update(Config, Action, Params) ->
     Date = httpd_util:rfc1123_date(),
     Signature = base64:encode_to_string(
-                  erlcloud_util:sha256_mac(Config#aws_config.secret_access_key, Date)),
+                  erlcloud_util:sha_mac(Config#aws_config.secret_access_key, Date)),
     Auth = lists:flatten(
              ["AWS3-HTTPS AWSAccessKeyId=",
               Config#aws_config.access_key_id, 
-              ",Algorithm=HmacSHA256,Signature=",
+              ",Algorithm=HmacSHA1,Signature=",
               Signature]),
              
     Headers = [{"Date", Date},
